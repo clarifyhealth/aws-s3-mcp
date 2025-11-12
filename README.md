@@ -98,8 +98,19 @@ The server can be configured using the following environment variables:
 | `AWS_REGION`            | AWS region where your S3 buckets are located      | `us-east-1`       |
 | `S3_BUCKETS`            | Comma-separated list of allowed S3 bucket names   | (empty)           |
 | `S3_MAX_BUCKETS`        | Maximum number of buckets to return in listing    | `5`               |
-| `AWS_ACCESS_KEY_ID`     | AWS access key (if not using default credentials) | (from AWS config) |
-| `AWS_SECRET_ACCESS_KEY` | AWS secret key (if not using default credentials) | (from AWS config) |
+| `AWS_PROFILE`           | AWS profile name to use from credentials file     | `default`         |
+| `AWS_ACCESS_KEY_ID`     | AWS access key (optional, uses credential chain)  | (from AWS config) |
+| `AWS_SECRET_ACCESS_KEY` | AWS secret key (optional, uses credential chain)  | (from AWS config) |
+| `AWS_SESSION_TOKEN`     | AWS session token (for temporary credentials)     | (from AWS config) |
+
+**Note on AWS Credentials**: If `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are not set, the server will automatically use the AWS SDK credential provider chain, which includes:
+- `AWS_PROFILE` environment variable (to select a specific profile)
+- `~/.aws/credentials` file
+- `~/.aws/config` file
+- IAM roles (for ECS/EC2 instances)
+- Other standard AWS credential sources
+
+**Recommended approach**: Use `AWS_PROFILE` to select a named profile from your AWS credentials file. This works especially well with AWS SSO and temporary credentials with session tokens.
 
 ## Running the Server
 

@@ -22,10 +22,16 @@ export class S3Resource {
     };
 
     // Set credentials if provided in environment variables
+    // If not provided, SDK will use default credential provider chain:
+    // ~/.aws/credentials, ~/.aws/config, IAM roles, etc.
     if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
       clientOptions.credentials = {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        // Support session tokens for temporary credentials
+        ...(process.env.AWS_SESSION_TOKEN && {
+          sessionToken: process.env.AWS_SESSION_TOKEN
+        }),
       };
     }
 

@@ -71,9 +71,15 @@ Environment Variables:
   AWS_REGION            AWS region where your S3 buckets are located
   S3_BUCKETS            Comma-separated list of allowed S3 bucket names
   S3_MAX_BUCKETS        Maximum number of buckets to return in listing
-  AWS_ACCESS_KEY_ID     AWS access key (if using explicit credentials)
-  AWS_SECRET_ACCESS_KEY AWS secret key (if using explicit credentials)
   PORT                  Port for HTTP server (default: 3000)
+
+  AWS Credentials (optional - uses credential provider chain if not set):
+  AWS_PROFILE           Profile name from ~/.aws/credentials (recommended)
+  AWS_ACCESS_KEY_ID     AWS access key (explicit credentials)
+  AWS_SECRET_ACCESS_KEY AWS secret key (explicit credentials)
+  AWS_SESSION_TOKEN     AWS session token (for temporary credentials)
+
+  Note: Recommended to use AWS_PROFILE with ~/.aws/credentials file
 
 For more information, visit: https://github.com/samuraikun/aws-s3-mcp
   `);

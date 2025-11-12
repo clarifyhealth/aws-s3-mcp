@@ -7,10 +7,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Building and Running
 ```bash
 npm run build                    # Compile TypeScript to dist/
-npm start                       # Run with default transport (STDIO)
-node dist/index.js              # Direct execution (equivalent to npm start)
-node dist/index.js --http       # Run with HTTP transport on port 3000
-node dist/index.js --stdio      # Run with STDIO transport (explicit)
+npm start                       # Run with default transport (HTTP on port 3000)
+node dist/index.js              # Direct execution (HTTP transport, equivalent to npm start)
+node dist/index.js --http       # Run with HTTP transport on port 3000 (explicit)
+node dist/index.js --stdio      # Run with STDIO transport for Claude Desktop
 PORT=8080 node dist/index.js --http  # HTTP transport on custom port
 ```
 
@@ -101,6 +101,14 @@ This is an AWS S3 Model Context Protocol (MCP) server with a modular architectur
 - `S3_MAX_BUCKETS`: Limits bucket listing results
 - `PORT`: HTTP server port (default: 3000)
 - `MCP_TRANSPORT`: Force specific transport type ("stdio" or "http")
+
+**AWS Credentials** (all optional - uses AWS credential provider chain if not set):
+- `AWS_PROFILE`: Profile name from `~/.aws/credentials` and `~/.aws/config` (recommended)
+- `AWS_ACCESS_KEY_ID`: Explicit access key (not recommended for local development)
+- `AWS_SECRET_ACCESS_KEY`: Explicit secret key (not recommended for local development)
+- `AWS_SESSION_TOKEN`: Session token for temporary credentials
+
+**Recommended**: Use `AWS_PROFILE` to specify a named profile from your AWS credentials file. The SDK automatically uses the credential provider chain, which supports AWS SSO, temporary credentials, session tokens, and IAM roles.
 
 ### Protocol Compliance
 
